@@ -1,0 +1,1738 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+<meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>McDonald's SK - Objednaj online</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Speedee:wght@400;700&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* --- FAREBNÁ PALETA & RESET --- */
+        :root {
+            --mcd-gold: #FFC72C;
+            --mcd-red: #DA291C;
+            --mcd-dark: #111111;
+            --mcd-light: #F4F4F4;
+            --mcd-white: #FFFFFF;
+            --mcd-gray: #777777;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', 'Speedee', sans-serif;
+        }
+
+        body {
+            background-color: var(--mcd-white);
+            color: var(--mcd-dark);
+            overflow-x: hidden;
+        }
+
+        /* --- HERO SEKCIA --- */
+        .hero {
+            position: relative;
+            height: 100vh;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--mcd-white);
+            text-align: center;
+            overflow: hidden;
+        }
+
+        .hero-video-bg {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            z-index: 1;
+            transform: translate(-50%, -50%);
+            object-fit: cover;
+            filter: brightness(50%);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 800px;
+            padding: 20px;
+        }
+
+        .hero-title {
+            font-size: 3.5rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 10px rgba(0,0,0,0.5);
+        }
+
+        .hero-urgency {
+            background-color: var(--mcd-red);
+            color: var(--mcd-white);
+            display: inline-block;
+            padding: 8px 20px;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin-bottom: 30px;
+            animation: pulse 2s infinite;
+        }
+
+        .cta-btn {
+            background-color: var(--mcd-gold);
+            color: var(--mcd-dark);
+            padding: 18px 45px;
+            font-size: 1.4rem;
+            font-weight: 700;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: transform 0.2s ease, background-color 0.2s ease;
+            box-shadow: 0 4px 15px rgba(255, 199, 44, 0.4);
+            display: inline-block;
+        }
+
+        .cta-btn:hover {
+            transform: scale(1.05);
+            background-color: #f5be22;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        /* --- AKCIE & NOVINKY (KARUSEL + TIMER) --- */
+        .section-padding {
+            padding: 80px 10px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 40px;
+            position: relative;
+        }
+
+        .carousel-container {
+            position: relative;
+            overflow: hidden;
+            background: var(--mcd-light);
+            border-radius: 15px;
+            padding: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+
+        .carousel-slide {
+            display: flex;
+            align-items: center;
+            gap: 40px;
+            width: 100%;
+        }
+
+        .carousel-info {
+            flex: 1;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 5px 15px;
+            border-radius: 5px;
+            color: var(--mcd-white);
+            font-weight: 700;
+            font-size: 0.85rem;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+        }
+
+        .badge.new { background-color: var(--mcd-red); }
+        .badge.promo { background-color: var(--mcd-dark); }
+
+        .timer {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .timer-box {
+            background: var(--mcd-white);
+            padding: 10px 15px;
+            border-radius: 8px;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .timer-box span {
+            display: block;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--mcd-red);
+        }
+
+        /* --- PRODUKTOVÉ KARTY --- */
+        .grid-products {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        .product-card {
+            background: var(--mcd-white);
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            transition: translateY 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid #eee;
+            position: relative;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+        }
+
+        .product-img {
+            max-width: 100%;
+            height: 180px;
+            object-fit: contain;
+            margin-bottom: 15px;
+        }
+
+        .product-name {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .product-rating {
+            color: var(--mcd-gold);
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+        }
+
+        .product-rating span {
+            color: var(--mcd-gray);
+            margin-left: 5px;
+        }
+
+        .product-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 15px;
+        }
+
+        .product-price {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--mcd-dark);
+        }
+
+        .add-to-cart-btn {
+            background-color: var(--mcd-red);
+            color: var(--mcd-white);
+            border: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .add-to-cart-btn:hover {
+            background-color: #b81d13;
+        }
+
+        /* --- SOCIÁLNY DÔKAZ --- */
+        .social-proof-bg {
+            background-color: var(--mcd-dark);
+            color: var(--mcd-white);
+            padding: 60px 0;
+        }
+
+        .stats-container {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+            gap: 30px;
+        }
+
+        .stat-item h3 {
+            font-size: 3rem;
+            color: var(--mcd-gold);
+            margin-bottom: 5px;
+        }
+
+        /* --- APP DOWNLOAD SEKCIJA --- */
+        .app-section {
+            background: linear-gradient(135deg, #fff 50%, var(--mcd-gold) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-radius: 20px;
+            padding: 50px;
+            margin-top: 40px;
+            flex-wrap: wrap;
+            gap: 30px;
+        }
+
+        .app-content { flex: 1; min-width: 300px; }
+        .app-content h2 { font-size: 2.2rem; margin-bottom: 15px; }
+        .app-content ul { list-style: none; margin-bottom: 25px; }
+        .app-content ul li { margin-bottom: 10px; font-size: 1.1rem; }
+        .app-content ul li i { color: var(--mcd-red); margin-right: 10px; }
+
+        .app-badges { display: flex; gap: 15px; flex-wrap: wrap; }
+        .app-badges img { height: 45px; cursor: pointer; }
+
+        .qr-box {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+        .qr-box img { width: 150px; height: 150px; }
+
+        /* --- NÁJDI REŠTAURÁCIU --- */
+        .geo-widget {
+            background: var(--mcd-light);
+            border-radius: 15px;
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .geo-btn {
+            background-color: var(--mcd-dark);
+            color: var(--mcd-white);
+            padding: 15px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .restaurant-status {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            display: none; /* Zobrazí sa cez JS */
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        }
+
+        .status-badge {
+            background: #28a745;
+            color: white;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .hero-title { font-size: 2.2rem; }
+            .carousel-slide { flex-direction: column; text-align: center; }
+            .app-section { padding: 30px; }
+        }
+    </style>
+</head>
+<body>
+
+    <section class="hero">
+        <video autoplay muted loop playsinline class="hero-video-bg">
+            <source src="https://assets.mixkit.co/videos/preview/mixkit-pouring-thick-chocolate-sauce-on-a-burger-41680-large.mp4" type="video/mp4">
+        </video>
+        <div class="hero-content">
+            <h1 class="hero-title">Ikonická chuť, doručená bleskovo</h1>
+            <div class="hero-urgency"><i class="fa-solid fa-bolt"></i> Doručenie do 30 minút až k tvojim dverám!</div>
+            <br>
+            <a href="#menu" class="cta-btn">Objednaj teraz</a>
+        </div>
+    </section>
+
+    <section class="section-padding">
+        <h2 class="section-title">Aktuálne akcie a limitované novinky</h2>
+        <div class="carousel-container">
+            <div class="carousel-slide">
+                <div class="carousel-info">
+                    <span class="badge new">Limitovaná ponuka</span>
+                    <h3>Svetové menu: Šťavnatý Maple BBQ & Bacon McRoyal!</h3>
+                    <p style="margin-top: 10px; color: var(--mcd-gray);">Vychutnaj si prémiové hovädzie mäso s javorovo-BBQ omáčkou a chrumkavou slaninou. Ponuka končí o:</p>
+                    
+                    <div class="timer" id="countdown">
+                        <div class="timer-box"><span id="days">00</span>dní</div>
+                        <div class="timer-box"><span id="hours">00</span>hod</div>
+                        <div class="timer-box"><span id="minutes">00</span>min</div>
+                        <div class="timer-box"><span id="seconds">00</span>sek</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section-padding" id="menu">
+        <h2 class="section-title">Najobľúbenejšia ponuka</h2>
+        <div class="grid-products">
+            
+            <div class="product-card">
+                <span class="badge new" style="position:absolute; top:15px; left:15px;">TOP</span>
+                <img src="https://www.mcdonalds.sk/media/images/products/big-mac-single.png" alt="Big Mac" class="product-img" onerror="this.src='https://placehold.co/200x180?text=Big+Mac'">
+                <div class="product-name">Big Mac™</div>
+                <div class="product-rating">
+                    <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star-half-stroke"></i>
+                    <span>(12,4k+)</span>
+                </div>
+                <div class="product-meta">
+                    <div class="product-price">4,90 €</div>
+                    <button class="add-to-cart-btn" onclick="addToCart('Big Mac')">Pridať do košíka</button>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <img src="https://www.mcdonalds.sk/media/images/products/6-ks-chicken-mcnuggets_v3.png" alt="McNuggets" class="product-img" onerror="this.src='https://placehold.co/200x180?text=McNuggets'">
+                <div class="product-name">Chicken McNuggets™ (6ks)</div>
+                <div class="product-rating">
+                    <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                    <span>(9,8k+)</span>
+                </div>
+                <div class="product-meta">
+                    <div class="product-price">4,50 €</div>
+                    <button class="add-to-cart-btn" onclick="addToCart('Chicken McNuggets')">Pridať do košíka</button>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <span class="badge promo" style="position:absolute; top:15px; left:15px;">Sezónne</span>
+                <img src="https://www.mcdonalds.sk/media/images/products/big-tasty-bacon-single_v2.png" alt="Big Tasty Bacon" class="product-img" onerror="this.src='https://placehold.co/200x180?text=Big+Tasty'">
+                <div class="product-name">Big Tasty Bacon</div>
+                <div class="product-rating">
+                    <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-regular fa-star"></i>
+                    <span>(5,2k+)</span>
+                </div>
+                <div class="product-meta">
+                    <div class="product-price">6,20 €</div>
+                    <button class="add-to-cart-btn" onclick="addToCart('Big Tasty Bacon')">Pridať do košíka</button>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <section class="social-proof-bg">
+        <div class="stats-container">
+            <div class="stat-item">
+                <h3>1M+</h3>
+                <p>Objednávok mesačne na Slovensku</p>
+            </div>
+            <div class="stat-item">
+                <h3>4.8 <i class="fa-solid fa-star" style="font-size: 1.5rem; color: var(--mcd-gold);"></i></h3>
+                <p>Priemerné hodnotenie doručenia</p>
+            </div>
+            <div class="stat-item">
+                <h3>99.4%</h3>
+                <p>Spokojných a najedených zákazníkov</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="section-padding">
+        <div class="app-section">
+            <div class="app-content">
+                <h2>Objednávaj výhodnejšie s appkou</h2>
+                <ul>
+                    <li><i class="fa-solid fa-circle-check"></i> Exkluzívne zľavy a denné kupóny</li>
+                    <li><i class="fa-solid fa-circle-check"></i> Vernostný program MyReward - zbieraj body za každý nákup</li>
+                    <li><i class="fa-solid fa-circle-check"></i> Preskoč radu s funkciou MyOrder</li>
+                </ul>
+                <div class="app-badges">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg" alt="Google Play">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/3/3c/Download_on_the_App_Store_Badge.svg" alt="App Store">
+                </div>
+            </div>
+            <div class="qr-box">
+                <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://www.mcdonalds.sk" alt="QR Code">
+                <p style="margin-top: 10px; font-weight: bold; font-size: 0.9rem;">Naskenuj a stiahni</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="section-padding">
+        <h2 class="section-title">Máš chuť hneď teraz? Nájdi nás</h2>
+        <div class="geo-widget">
+            <button class="geo-btn" onclick="findNearestRest()"><i class="fa-solid fa-location-crosshairs"></i> Vyhľadať najbližšiu pobočku</button>
+            
+            <div id="rest-status" class="restaurant-status">
+                <h4 id="rest-name" style="font-size: 1.2rem; margin-bottom: 5px;">McDonald's Banská Bystrica / Bratislava Drive</h4>
+                <p style="color: var(--mcd-gray); margin-bottom: 10px;"><i class="fa-solid fa-clock"></i> Reštaurácia: 06:00 - 24:00</p>
+                <p style="font-weight: 600;"><i class="fa-solid fa-car"></i> McDrive: <span class="status-badge">24/7 Otvorené</span></p>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // 1. Countdown Timer pre limitovanú ponuku (Nastavený na +3 dni od načítania pre demo účely)
+        const targetDate = new Date();
+        targetDate.setDate(targetDate.getDate() + 3);
+
+        function updateTimer() {
+            const now = new Date().getTime();
+            const difference = targetDate - now;
+
+            const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((difference % (1000 * 60)) / 1000);
+
+            document.getElementById("days").innerText = days < 10 ? "0" + days : days;
+            document.getElementById("hours").innerText = hours < 10 ? "0" + hours : hours;
+            document.getElementById("minutes").innerText = minutes < 10 ? "0" + minutes : minutes;
+            document.getElementById("seconds").innerText = seconds < 10 ? "0" + seconds : seconds;
+        }
+        setInterval(updateTimer, 1000);
+        updateTimer();
+
+        // 2. CRO Feedback pre Tlačidlo "Pridať do košíka"
+        function addToCart(productName) {
+            // Zmena textu tlačidla na indikáciu úspechu (mikro-konverzia)
+            const btn = event.target;
+            const originalText = btn.innerText;
+            
+            btn.innerText = "✓ Pridané";
+            btn.style.backgroundColor = "#28a745";
+            btn.disabled = true;
+
+            setTimeout(() => {
+                btn.innerText = originalText;
+                btn.style.backgroundColor = "var(--mcd-red)";
+                btn.disabled = false;
+            }, 1500);
+
+            console.log(`${productName} pridaný do košíka.`);
+        }
+
+        // 3. Simulácia Geolokačného Widgetu (Zníženie trenia)
+        function findNearestRest() {
+            const btn = document.querySelector('.geo-btn');
+            const statusWidget = document.getElementById('rest-status');
+            
+            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Vyhľadávam...';
+            
+            // Simulácia načítania GPS dát
+            setTimeout(() => {
+                btn.innerHTML = '<i class="fa-solid fa-location-crosshairs"></i> Pobčka nájdená';
+                statusWidget.style.display = 'block';
+                statusWidget.scrollIntoView({ behavior: 'smooth' });
+            }, 1200);
+        }
+    </script>
+</body>
+</html>
+<section class="mcd-hero">
+  <div class="mcd-hero-content">
+    <div class="mcd-urgency-badge">⚡ Doručenie do 30 minút</div>
+    <h1 class="mcd-hero-title">
+      Doručíme vám <span class="animate-pop">chuť</span>
+    </h1>
+    <p class="mcd-hero-subtitle">Tvoj obľúbený burger a hranolčeky priamo k tebe domov.</p>
+    <a href="#menu" class="mcd-hero-cta">Objednaj teraz</a>
+  </div>
+</section>
+
+<style>
+  /* Google Fonts Import */
+  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap');
+
+  :root {
+    --mcd-yellow: #FFC72C;
+    --mcd-red: #DA291C;
+    --mcd-dark: #111111;
+    --mcd-white: #FFFFFF;
+  }
+
+  .mcd-hero {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    background: linear-gradient(135deg, var(--mcd-red) 60%, #b81d13 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    overflow: hidden;
+  }
+
+  .mcd-hero-content {
+    padding: 20px;
+    color: var(--mcd-white);
+    z-index: 2;
+    max-width: 600px;
+  }
+
+  .mcd-urgency-badge {
+    background-color: rgba(255, 255, 255, 0.2);
+    display: inline-block;
+    padding: 6px 16px;
+    border-radius: 50px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-bottom: 20px;
+    letter-spacing: 0.5px;
+  }
+
+  .mcd-hero-title {
+    font-size: 2.8rem;
+    font-weight: 800;
+    line-height: 1.2;
+    margin-bottom: 15px;
+    text-transform: uppercase;
+  }
+
+  /* Animácia slova 'chuť' */
+  .animate-pop {
+    color: var(--mcd-yellow);
+    display: inline-block;
+    animation: pulseText 2s infinite ease-in-out;
+  }
+
+  .mcd-hero-subtitle {
+    font-size: 1.1rem;
+    margin-bottom: 35px;
+    opacity: 0.9;
+  }
+
+  /* Veľké CTA s Hover efektom */
+  .mcd-hero-cta {
+    background-color: var(--mcd-yellow);
+    color: var(--mcd-dark);
+    padding: 16px 40px;
+    font-size: 1.25rem;
+    font-weight: 800;
+    text-decoration: none;
+    border-radius: 50px;
+    box-shadow: 0 6px 20px rgba(255, 199, 44, 0.4);
+    transition: transform 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.25s ease;
+    display: inline-block;
+  }
+
+  .mcd-hero-cta:hover {
+    transform: scale(1.08);
+    box-shadow: 0 10px 25px rgba(255, 199, 44, 0.6);
+  }
+
+  .mcd-hero-cta:active {
+    transform: scale(0.98);
+  }
+
+  /* Kľúčové snímky animácie */
+  @keyframes pulseText {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1) rotate(2deg); }
+  }
+
+  /* RESPONSIVE DESIGN (Desktop) */
+  @media (min-width: 768px) {
+    .mcd-hero-title {
+      font-size: 4.5rem;
+    }
+    .mcd-hero-subtitle {
+      font-size: 1.4rem;
+    }
+    .mcd-hero-cta {
+      padding: 18px 50px;
+      font-size: 1.4rem;
+    }
+  }
+</style><div class="mcd-products-grid">
+  
+  <div class="mcd-product-card">
+    <div class="mcd-img-placeholder">
+      🍔
+    </div>
+    <div class="mcd-product-info">
+      <h3 class="mcd-product-name">Big Mac™</h3>
+      <div class="mcd-rating">⭐⭐⭐⭐★ <span class="rating-count">(4.8)</span></div>
+      <div class="mcd-product-footer">
+        <span class="mcd-product-price">5,40 €</span>
+        <button class="mcd-add-btn">Pridaj do košíka</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="mcd-product-card">
+    <div class="mcd-img-placeholder">
+      🍟
+    </div>
+    <div class="mcd-product-info">
+      <h3 class="mcd-product-name">Hranolčeky Veľké</h3>
+      <div class="mcd-rating">⭐⭐⭐⭐⭐ <span class="rating-count">(5.0)</span></div>
+      <div class="mcd-product-footer">
+        <span class="mcd-product-price">2,90 €</span>
+        <button class="mcd-add-btn">Pridaj do košíka</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="mcd-product-card">
+    <div class="mcd-img-placeholder">
+      🍦
+    </div>
+    <div class="mcd-product-info">
+      <h3 class="mcd-product-name">McFlurry™ Lotus</h3>
+      <div class="mcd-rating">⭐⭐⭐⭐★ <span class="rating-count">(4.6)</span></div>
+      <div class="mcd-product-footer">
+        <span class="mcd-product-price">3,20 €</span>
+        <button class="mcd-add-btn">Pridaj do košíka</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="mcd-product-card">
+    <div class="mcd-img-placeholder">
+      🍗
+    </div>
+    <div class="mcd-product-info">
+      <h3 class="mcd-product-name">McNuggets™ 6 ks</h3>
+      <div class="mcd-rating">⭐⭐⭐⭐★ <span class="rating-count">(4.7)</span></div>
+      <div class="mcd-product-footer">
+        <span class="mcd-product-price">4,80 €</span>
+        <button class="mcd-add-btn">Pridaj do košíka</button>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<style>
+  .mcd-products-grid {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr); /* Mobil: 1 stĺpec */
+    gap: 25px;
+    padding: 40px 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    font-family: 'Poppins', sans-serif;
+  }
+
+  .mcd-product-card {
+    background: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: 1px solid #f0f0f0;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Animácia na hover */
+  .mcd-product-card:hover {
+    transform: scale(1.03);
+    box-shadow: 0 12px 25px rgba(0,0,0,0.12);
+  }
+
+  .mcd-img-placeholder {
+    width: 100%;
+    height: 180px;
+    background-color: #f8f8f8;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 4rem; /* Nahrádza obrázok */
+  }
+
+  .mcd-product-info {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+  }
+
+  .mcd-product-name {
+    font-size: 18px; /* Požadovaná veľkosť */
+    font-weight: 700;
+    color: #111;
+    margin: 0 0 8px 0;
+  }
+
+  .mcd-rating {
+    font-size: 0.9rem;
+    color: #FFC72C;
+    margin-bottom: 20px;
+  }
+
+  .rating-count {
+    color: #888;
+    font-size: 0.8rem;
+    margin-left: 4px;
+  }
+
+  .mcd-product-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: auto;
+  }
+
+  .mcd-product-price {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: #111;
+  }
+
+  .mcd-add-btn {
+    background-color: #DA291C; /* Červené */
+    color: #ffffff;
+    border: none;
+    padding: 10px 20px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    border-radius: 50px; /* Zaoblené */
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+  }
+
+  .mcd-add-btn:hover {
+    background-color: #b81d13;
+  }
+
+  /* RESPONSIVE BREAKPOINTS */
+  @media (min-width: 576px) {
+    .mcd-products-grid {
+      grid-template-columns: repeat(2, 1fr); /* Tablet: 2 stĺpce */
+    }
+  }
+
+  @media (min-width: 992px) {
+    .mcd-products-grid {
+      grid-template-columns: repeat(4, 1fr); /* Desktop: 4 stĺpce */
+    }
+  }
+</style><div class="ab-test-wrapper">
+  <h3>CRO A/B Test Elementy (Ukážka variantov)</h3>
+  
+  <div class="test-container">
+    <p>Variant A (Klasický/Priamy):</p>
+    <button class="mcd-cta-varA" onclick="trackCTA('Variant A - Objednaj teraz')">Objednaj teraz</button>
+  </div>
+
+  <div class="test-container">
+    <p>Variant B (Emocionálny/Kulatý):</p>
+    <button class="mcd-cta-varB" onclick="trackCTA('Variant B - Chcem to!')">Chcem to!</button>
+  </div>
+
+  <div class="test-container">
+    <p>Variant C (Zľavový/Magnet/Urgency):</p>
+    <button class="mcd-cta-varC" onclick="trackCTA('Variant C - Zober si zľavu 20%')">Zober si zľavu 20% <span>🔥</span></button>
+  </div>
+</div>
+
+<style>
+  .ab-test-wrapper {
+    max-width: 500px;
+    margin: 40px auto;
+    padding: 30px;
+    background: #fdfdfd;
+    border: 2px dashed #ccc;
+    border-radius: 12px;
+    font-family: 'Poppins', sans-serif;
+  }
+
+  .ab-test-wrapper h3 { text-align: center; margin-bottom: 25px; color: #333; }
+  .test-container { margin-bottom: 25px; text-align: center; }
+  .test-container p { font-size: 0.85rem; color: #666; margin-bottom: 8px; font-weight: 600;}
+
+  /* VARIANT A: Korporátna klasika, obdĺžnik s jemným zaoblením, stabilný rast */
+  .mcd-cta-varA {
+    background-color: #DA291C;
+    color: white;
+    border: none;
+    padding: 14px 35px;
+    font-size: 1.1rem;
+    font-weight: 700;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    width: 100%;
+  }
+  .mcd-cta-varA:hover {
+    background-color: #b81d13;
+  }
+
+  /* VARIANT B: Emocionálne žlté tlačidlo, plne zaoblené, hravá "wobble" animácia */
+  .mcd-cta-varB {
+    background-color: #FFC72C;
+    color: #111;
+    border: none;
+    padding: 14px 35px;
+    font-size: 1.1rem;
+    font-weight: 800;
+    border-radius: 50px;
+    cursor: pointer;
+    width: 100%;
+    box-shadow: 0 4px 12px rgba(255, 199, 44, 0.3);
+  }
+  .mcd-cta-varB:hover {
+    animation: wobbleEffect 0.5s ease-in-out;
+    background-color: #e5b220;
+  }
+
+  /* VARIANT C: Kontrastný tmavý variant ponúkajúci priamu hodnotu so zábleskovým (shimmer) efektom */
+  .mcd-cta-varC {
+    position: relative;
+    background-color: #111111;
+    color: #FFC72C;
+    border: 2px solid #FFC72C;
+    padding: 14px 35px;
+    font-size: 1.1rem;
+    font-weight: 700;
+    border-radius: 50px;
+    cursor: pointer;
+    overflow: hidden;
+    width: 100%;
+  }
+  .mcd-cta-varC span { font-size: 1.2rem; }
+  
+  /* Shimmer Efekt */
+  .mcd-cta-varC::after {
+    content: '';
+    position: absolute;
+    top: -50%; right: -50%; bottom: -50%; left: -50%;
+    background: linear-gradient(to bottom right, rgba(255,255,255,0) 0%, rgba(255,255,255,0.13) 50%, rgba(255,255,255,0) 100%);
+    transform: rotate(45deg);
+    transition: all 0.5s;
+    animation: shimmer 3s infinite;
+  }
+
+  /* ANIMÁCIE PRE AB TEST */
+  @keyframes wobbleEffect {
+    0% { transform: scale(1); }
+    30% { transform: scale(1.05) rotate(-2deg); }
+    60% { transform: scale(1.05) rotate(2deg); }
+    100% { transform: scale(1); }
+  }
+
+  @keyframes shimmer {
+    0% { transform: translate(-30%, -30%) rotate(45deg); }
+    100% { transform: translate(30%, 30%) rotate(45deg); }
+  }
+</style>
+
+<script>
+  /**
+   * Funkcia pre sledovanie kliknutí na A/B varianty
+   * @param {string} variant - Názov kliknutého variantu
+   */
+  function trackCTA(variant) {
+    // 1. Logovanie do konzoly (pre overenie vývojárom)
+    console.log(`[CRO Tracking]: Používateľ klikol na: ${variant}`);
+    
+    // 2. Príklad odoslania do Google Analytics 4 (GA4) / Google Tag Manager dataLayer
+    if (typeof dataLayer !== 'undefined') {
+        dataLayer.push({
+            'event': 'ab_test_click',
+            'cta_variant': variant
+        });
+    }
+
+    // Vizualizácia akcie priamo na webe (Notification toast)
+    alert(`Úspešne zaznamenaný konverzný event: ${variant}`);
+  }
+</script><div class="cro-urgency-container">
+  <div class="cro-live-stats">
+    <span class="pulse-dot"></span> 
+    <span id="live-orders-text">287 ľudí si objednalo dnes</span>
+  </div>
+
+  <div class="cro-stock-counter">
+    <div class="progress-bar-stock">
+      <div class="progress-fill-stock" style="width: 20%;"></div>
+    </div>
+    <p class="stock-text">🔥 <span class="highlight">Zostáva len 5 kusov</span> z limitovanej edície!</p>
+  </div>
+
+  <div class="cro-timer-banner">
+    <p>Ponuka platí do 24:00 – nepremeškaj svoju šancu:</p>
+    <div id="midnight-countdown" class="midnight-timer">00h : 00m : 00s</div>
+  </div>
+</div>
+
+<div id="live-notification" class="live-popup">
+  <div class="popup-icon">🍔</div>
+  <div class="popup-content">
+    <p class="popup-title">Nová objednávka z pred 4 minút</p>
+    <p class="popup-desc">Martin z Bratislavy si objednal Big Mac Kombo</p>
+  </div>
+</div>
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+
+  .cro-urgency-container {
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 25px;
+    background: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+    font-family: 'Poppins', sans-serif;
+  }
+
+  /* Live status */
+  .cro-live-stats {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 600;
+    color: #111;
+    margin-bottom: 20px;
+  }
+  .pulse-dot {
+    width: 10px;
+    height: 10px;
+    background-color: #28a745;
+    border-radius: 50%;
+    box-shadow: 0 0 0 0 rgba(40, 167, 69, 0.7);
+    animation: pulseGlow 1.6s infinite;
+  }
+
+  /* Stock counter */
+  .cro-stock-counter { margin-bottom: 25px; }
+  .progress-bar-stock {
+    background: #eeeeee;
+    height: 8px;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 8px;
+  }
+  .progress-fill-stock {
+    background: #DA291C;
+    height: 100%;
+    animation: shrinkBar 1s ease-out forwards;
+  }
+  .stock-text { font-size: 0.95rem; font-weight: 600; }
+  .highlight { color: #DA291C; font-weight: 700; }
+
+  /* Midnight Timer */
+  .cro-timer-banner {
+    background: #F4F4F4;
+    padding: 15px;
+    border-radius: 10px;
+    text-align: center;
+  }
+  .cro-timer-banner p { font-size: 0.9rem; margin-bottom: 8px; font-weight: 600; }
+  .midnight-timer {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: #111;
+    letter-spacing: 1px;
+  }
+
+  /* Live Popup Notifikácia */
+  .live-popup {
+    position: fixed;
+    bottom: -100px;
+    left: 20px;
+    background: white;
+    box-shadow: 0 12px 30px rgba(0,0,0,0.15);
+    padding: 15px 20px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    z-index: 9999;
+    transition: bottom 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    border-left: 5px solid #FFC72C;
+  }
+  .live-popup.show { bottom: 20px; }
+  .popup-icon { font-size: 1.8rem; }
+  .popup-title { font-size: 0.85rem; font-weight: 700; color: #111; margin: 0; }
+  .popup-desc { font-size: 0.8rem; color: #666; margin: 0; }
+
+  /* Animácie */
+  @keyframes pulseGlow {
+    0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(40, 167, 69, 0.7); }
+    70% { transform: scale(1); box-shadow: 0 0 0 8px rgba(40, 167, 69, 0); }
+    100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(40, 167, 69, 0); }
+  }
+</style>
+
+<script>
+  // Odpočítavanie do polnoci
+  function updateMidnightTimer() {
+    const now = new Date();
+    const midnight = new Date();
+    midnight.setHours(24, 0, 0, 0);
+
+    const diff = midnight - now;
+
+    const hours = Math.floor(diff / (1000 * 60 * 60));
+    const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+    const pad = (num) => String(num).padStart(2, '0');
+    document.getElementById('midnight-countdown').innerText = `${pad(hours)}h : ${pad(minutes)}m : ${pad(seconds)}s`;
+  }
+  setInterval(updateMidnightTimer, 1000);
+  updateMidnightTimer();
+
+  // Simulácia vyskakovacej real-time notifikácie
+  setTimeout(() => {
+    const popup = document.getElementById('live-notification');
+    popup.classList.add('show');
+    setTimeout(() => popup.classList.remove('show'), 5000); // Skryť po 5s
+  }, 3000); // Zobraziť 3 sekundy po načítaní
+</script><div class="mcd-pricing-anchor">
+  <div class="mcd-badge-saving">Ušetríš 2,10 €</div>
+  <h4 class="combo-title">McMenu™ Grande s Big Macom</h4>
+  <p class="combo-desc">Veľký Big Mac, veľké hranolčeky, 0.5l nápoj podľa výberu.</p>
+  
+  <div class="price-wrapper">
+    <div class="old-price">9,60 €</div>
+    <div class="current-price">7,50 € <span class="price-tax">vrátane DPH</span></div>
+  </div>
+</div>
+
+<style>
+  .mcd-pricing-anchor {
+    max-width: 400px;
+    margin: 20px auto;
+    padding: 25px;
+    background: #ffffff;
+    border: 2px solid #FFC72C;
+    border-radius: 16px;
+    position: relative;
+    font-family: 'Poppins', sans-serif;
+  }
+  .mcd-badge-saving {
+    position: absolute;
+    top: -12px;
+    right: 20px;
+    background-color: #DA291C;
+    color: #fff;
+    padding: 4px 14px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    border-radius: 50px;
+    text-transform: uppercase;
+    box-shadow: 0 4px 10px rgba(218, 41, 28, 0.3);
+  }
+  .combo-title { font-size: 1.2rem; font-weight: 700; color: #111; margin-bottom: 5px; }
+  .combo-desc { font-size: 0.85rem; color: #666; margin-bottom: 15px; }
+  
+  .price-wrapper {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+  }
+  /* Kotvenie vysokej ceny */
+  .old-price {
+    font-size: 1.2rem;
+    color: #999;
+    text-decoration: line-through;
+    font-weight: 500;
+  }
+  /* Zvýraznená nová ponuka */
+  .current-price {
+    font-size: 2rem;
+    color: #DA291C;
+    font-weight: 800;
+    display: flex;
+    flex-direction: column;
+    line-height: 1;
+  }
+  .price-tax {
+    font-size: 0.7rem;
+    color: #888;
+    font-weight: 400;
+    margin-top: 4px;
+  }
+</style><div class="mcd-wizard-container">
+  
+  <div class="wizard-progress-wrapper">
+    <div class="wizard-progress-bar" id="wizard-progress" style="width: 33.33%;"></div>
+    <div class="wizard-steps-indicator">
+      <div class="step-dot active" data-step="1">1</div>
+      <div class="step-dot" data-step="2">2</div>
+      <div class="step-dot" data-step="3">3</div>
+    </div>
+  </div>
+
+  <div class="wizard-step-content active" id="step-1">
+    <h4>Krok 1: Vyber si veľkosť menu</h4>
+    <div class="options-grid">
+      <label class="option-card"><input type="radio" name="size" value="regular" checked> Regular Menu</label>
+      <label class="option-card"><input type="radio" name="size" value="grande"> Grande Menu (+0,90€)</label>
+    </div>
+  </div>
+
+  <div class="wizard-step-content" id="step-2">
+    <h4>Krok 2: Vyber si prílohu</h4>
+    <div class="options-grid">
+      <label class="option-card"><input type="radio" name="side" value="fries" checked> Hranolčeky</label>
+      <label class="option-card"><input type="radio" name="side" value="salat"> Šalát</label>
+    </div>
+  </div>
+
+  <div class="wizard-step-content" id="step-3">
+    <h4>Krok 3: Vyber si nápoj</h4>
+    <div class="options-grid">
+      <label class="option-card"><input type="radio" name="drink" value="coke" checked> Coca-Cola</label>
+      <label class="option-card"><input type="radio" name="drink" value="water"> Fanta</label>
+    </div>
+  </div>
+
+  <div class="wizard-footer">
+    <button id="btn-back" class="w-btn btn-secondary" disabled>Späť</button>
+    <button id="btn-next" class="w-btn btn-primary">Ďalej</button>
+  </div>
+</div>
+
+<style>
+  .mcd-wizard-container {
+    max-width: 500px;
+    margin: 30px auto;
+    padding: 25px;
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+    font-family: 'Poppins', sans-serif;
+  }
+
+  /* Progress bar s bodmi */
+  .wizard-progress-wrapper {
+    position: relative;
+    background: #eee;
+    height: 4px;
+    margin-bottom: 40px;
+    margin-top: 15px;
+    border-radius: 2px;
+  }
+  .wizard-progress-bar {
+    background: #FFC72C;
+    height: 100%;
+    transition: width 0.3s ease;
+  }
+  .wizard-steps-indicator {
+    position: absolute;
+    top: -10px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+  }
+  .step-dot {
+    width: 24px;
+    height: 24px;
+    background: #eee;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #666;
+    transition: all 0.3s ease;
+  }
+  .step-dot.active {
+    background: #FFC72C;
+    color: #111;
+    transform: scale(1.15);
+  }
+
+  /* Viditeľnosť krokov */
+  .wizard-step-content { display: none; }
+  .wizard-step-content.active { display: block; animation: fadeIn 0.3s ease; }
+
+  .options-grid { display: flex; flex-direction: column; gap: 12px; margin-top: 15px; }
+  .option-card {
+    padding: 15px;
+    border: 2px solid #eee;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .option-card:hover { border-color: #FFC72C; background-color: #fffdf7; }
+
+  /* Tlačidlá */
+  .wizard-footer { display: flex; justify-content: space-between; margin-top: 25px; }
+  .w-btn { padding: 12px 30px; font-weight: 700; border-radius: 50px; border: none; cursor: pointer; }
+  .btn-primary { background-color: #DA291C; color: white; }
+  .btn-secondary { background-color: #eee; color: #555; }
+  .w-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+</style>
+
+<script>
+  let currentStep = 1;
+  const totalSteps = 3;
+
+  const btnNext = document.getElementById('btn-next');
+  const btnBack = document.getElementById('btn-back');
+  const progressBar = document.getElementById('wizard-progress');
+  const dots = document.querySelectorAll('.step-dot');
+
+  btnNext.addEventListener('click', () => {
+    if (currentStep < totalSteps) {
+      document.getElementById(`step-${currentStep}`).classList.remove('active');
+      currentStep++;
+      document.getElementById(`step-${currentStep}`).classList.add('active');
+      updateWizardUI();
+    } else {
+      alert("Kombo úspešne nakonfigurované a pridané do košíka! 🍔");
+    }
+  });
+
+  btnBack.addEventListener('click', () => {
+    if (currentStep > 1) {
+      document.getElementById(`step-${currentStep}`).classList.remove('active');
+      currentStep--;
+      document.getElementById(`step-${currentStep}`).classList.add('active');
+      updateWizardUI();
+    }
+  });
+
+  function updateWizardUI() {
+    // Progress bar šírka
+    progressBar.style.width = `${(currentStep / totalSteps) * 100}%`;
+    
+    // Tlačidlá stavy
+    btnBack.disabled = currentStep === 1;
+    btnNext.innerText = currentStep === totalSteps ? 'Pridať do košíka' : 'Ďalej';
+    
+    // Aktívne bodky
+    dots.forEach(dot => {
+      const stepNum = parseInt(dot.getAttribute('data-step'));
+      if (stepNum <= currentStep) dot.classList.add('active');
+      else dot.classList.remove('active');
+    });
+  }
+</script><div id="exit-intent-modal" class="exit-modal-overlay">
+  <div class="exit-modal-box">
+    <button class="close-modal-btn" onclick="closeExitModal()">×</button>
+    <div class="modal-icon">🛒</div>
+    <h3>Tvoj košík na teba čaká!</h3>
+    <p>Uložili sme tvoj výber. Dokonči objednávku teraz a nestrať svoje vybrané lahôdky.</p>
+    <div class="modal-cta-box">
+      <button class="confirm-modal-btn" onclick="closeExitModal()">Dokončiť objednávku</button>
+    </div>
+  </div>
+</div>
+
+<style>
+  .exit-modal-overlay {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(4px);
+    z-index: 10000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0; pointer-events: none;
+    transition: opacity 0.3s ease;
+    font-family: 'Poppins', sans-serif;
+  }
+  .exit-modal-overlay.show { opacity: 1; pointer-events: auto; }
+  
+  .exit-modal-box {
+    background: white;
+    padding: 40px 30px;
+    border-radius: 20px;
+    max-width: 450px;
+    width: 90%;
+    text-align: center;
+    position: relative;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+  }
+  .close-modal-btn {
+    position: absolute; top: 15px; right: 20px;
+    background: none; border: none; font-size: 1.8rem; cursor: pointer; color: #888;
+  }
+  .modal-icon { font-size: 3.5rem; margin-bottom: 15px; }
+  .exit-modal-box h3 { font-size: 1.5rem; font-weight: 700; margin-bottom: 10px; color: #111; }
+  .exit-modal-box p { font-size: 0.95rem; color: #666; margin-bottom: 25px; line-height: 1.5; }
+  
+  .confirm-modal-btn {
+    background-color: #FFC72C;
+    color: #111;
+    border: none;
+    padding: 14px 35px;
+    font-size: 1.1rem;
+    font-weight: 700;
+    border-radius: 50px;
+    cursor: pointer;
+    box-shadow: 0 5px 15px rgba(255,199,44,0.4);
+    width: 100%;
+  }
+</style>
+
+<script>
+  // Detekcia myši smerujúcej von z obrazovky (Exit Intent)
+  let modalShown = false;
+
+  document.addEventListener('mouseleave', function(e) {
+    // Ak kurzor opustí vrchnú časť okna a modal ešte nebol zobrazený
+    if (e.clientY < 20 && !modalShown) {
+      document.getElementById('exit-intent-modal').classList.add('show');
+      modalShown = true; // Zobraziť iba raz za reláciu
+      
+      // Volateľné uloženie košíka do LocalStorage
+      localStorage.setItem('mcd_basket_saved', 'true');
+      console.log('[CRO Retencia]: Košík bol bezpečne uložený na pozadí.');
+    }
+  });
+
+  function closeExitModal() {
+    document.getElementById('exit-intent-modal').classList.remove('show');
+  }
+</script><!DOCTYPE html>
+<html lang="sk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>McDonald's SK | Doručíme vám chuť</title>
+  <meta name="description" content="Objednaj si svoj obľúbený burger z McDonald's. Rýchle doručenie, exkluzívne akcie a zľavy v aplikácii.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" media="print" onload="this.media='all'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap"></noscript>
+
+  <style>
+    /* Minifikovaný základ + Hero sekcia (Zabraňuje FOUC a znižuje LCP) */
+    :root{--mcd-yel:#FFC72C;--mcd-red:#DA291C;--mcd-dark:#111;--mcd-wht:#FFF;}
+    *{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
+    body{background:#f4f4f4;color:var(--mcd-dark);}
+    .hero{width:100%;height:100vh;background:linear-gradient(135deg,var(--mcd-red) 60%,#b81d13 100%);display:flex;align-items:center;justify-content:center;text-align:center;color:var(--mcd-wht);}
+    .hero-content{padding:20px;max-width:600px;}
+    .h-title{font-size:clamp(2.5rem, 5vw, 4.5rem);font-weight:800;text-transform:uppercase;line-height:1.1;margin-bottom:15px;}
+    .cta-btn{background:var(--mcd-yel);color:var(--mcd-dark);padding:16px 40px;font-size:1.25rem;font-weight:800;text-decoration:none;border-radius:50px;display:inline-block;transition:transform .2s;}
+    
+    /* Zvyšok rozloženia - Grid s prevenciou CLS */
+    .grid{display:grid;grid-template-columns:1fr;gap:25px;padding:40px 20px;max-width:1200px;margin:0 auto;}
+    @media(min-width:576px){.grid{grid-template-columns:repeat(2,1fr);}}
+    @media(min-width:992px){.grid{grid-template-columns:repeat(4,1fr);}}
+    .card{background:#fff;border-radius:16px;padding:20px;box-shadow:0 4px 15px rgba(0,0,0,.05);display:flex;flex-direction:column;}
+    
+    /* Prechod pre obrázky - dôležité pre CLS */
+    .img-wrapper{width:100%;aspect-ratio:4/3;background:#f8f8f8;border-radius:8px;overflow:hidden;margin-bottom:15px;position:relative;}
+    .img-wrapper img{width:100%;height:100%;object-fit:contain;}
+  </style>
+
+  </head>
+<body>
+
+  <header class="hero">
+    <div class="hero-content">
+      <picture>
+        <source srcset="hero-burger.webp" type="image/webp">
+        <img src="hero-burger.png" alt="Šťavnatý Big Mac" fetchpriority="high" width="400" height="300" style="max-width:100%; height:auto; margin-bottom: 20px;">
+      </picture>
+      
+      <h1 class="h-title">Doručíme vám chuť</h1>
+      <a href="#menu" class="cta-btn">Objednaj teraz</a>
+    </div>
+  </header>
+
+  <main id="menu" class="grid">
+    
+    <article class="card">
+      <div class="img-wrapper">
+        <picture>
+          <source srcset="https://www.mcdonalds.sk/media/images/products/big-mac-single.webp" type="image/webp">
+          <img src="https://www.mcdonalds.sk/media/images/products/big-mac-single.png" 
+               alt="Big Mac" 
+               loading="lazy" 
+               width="300" 
+               height="225"
+               decoding="async">
+        </picture>
+      </div>
+      <h3 style="font-size:18px; font-weight:700; margin-bottom:10px;">Big Mac™</h3>
+      <p style="font-size:1.3rem; font-weight:700; margin-top:auto;">4,90 €</p>
+    </article>
+
+    </main>
+
+  <script defer>
+    // Zapuzdrenie kódu na minimalizáciu globálnych premenných (Performance best practice)
+    document.addEventListener("DOMContentLoaded", () => {
+      // Tu by išla tvoja analytika a interakcie z prechádzajúcich krokov (A/B testing, wizard)
+      console.log("DOM loaded, non-blocking JS executed.");
+      
+      // Ukážka asynchrónneho trackingu, ktorý neblokuje Main Thread
+      requestIdleCallback(() => {
+        // Inicializácia analytiky len vtedy, keď má prehliadač čas
+        // trackCTA('Page Loaded');
+      });
+    });
+  </script>
+</body>
+</html>Tu je kompletný, prepojený a optimalizovaný kód pripravený pre tvoj HTML súbor.
+
+Spojil som všetky spomínané funkcie – add_to_cart event, meranie hĺbky scrollovania (Scroll Depth) a Exit Intent popup s príslušným sledovaním priamo do jedného celku. Kód stačí uložiť ako .html (napr. index.html) a otestovať.
+
+HTML
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>McDonald's SK | Analytika & Tracking</title>
+  
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f4f4;
+      color: #111;
+      height: 250vh; /* Umelo predĺžená stránka pre otestovanie scroll trackingu */
+    }
+
+    .container {
+      max-width: 600px;
+      margin: 50px auto;
+      padding: 20px;
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+      text-align: center;
+    }
+
+    h1 { font-size: 1.8rem; margin-bottom: 20px; }
+    p { color: #666; margin-bottom: 30px; }
+
+    /* Tlačidlo Pridať do košíka */
+    .btn-cart {
+      background-color: #DA291C;
+      color: white;
+      border: none;
+      padding: 14px 30px;
+      font-size: 1.1rem;
+      font-weight: 700;
+      border-radius: 50px;
+      cursor: pointer;
+      transition: background-color 0.2s;
+    }
+    .btn-cart:hover { background-color: #b81d13; }
+
+    /* Indikátor scrollovania pre testovacie účely */
+    .scroll-indicator {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: #111;
+      color: #FFC72C;
+      padding: 10px 15px;
+      border-radius: 8px;
+      font-weight: bold;
+      font-size: 0.85rem;
+    }
+
+    /* Exit Intent Pop-up Štýly */
+    .exit-modal-overlay {
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(4px);
+      z-index: 10000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0; pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+    .exit-modal-overlay.show { opacity: 1; pointer-events: auto; }
+    
+    .exit-modal-box {
+      background: white;
+      padding: 40px 30px;
+      border-radius: 20px;
+      max-width: 400px;
+      width: 90%;
+      text-align: center;
+      position: relative;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+    }
+    .close-btn {
+      position: absolute; top: 15px; right: 20px;
+      background: none; border: none; font-size: 1.8rem; cursor: pointer; color: #888;
+    }
+    .btn-modal-confirm {
+      background-color: #FFC72C;
+      color: #111;
+      border: none;
+      padding: 14px 35px;
+      font-size: 1.1rem;
+      font-weight: 700;
+      border-radius: 50px;
+      cursor: pointer;
+      width: 100%;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="scroll-indicator">Skroluj dole pre test GA4</div>
+
+  <div class="container">
+    <h1>McDonald's GA4 Tracking Demo</h1>
+    <p>Otvor si vývojársku konzolu v prehliadači (F12 -> Console), aby si videl odosielanie dataLayer eventov v reálnom čase.</p>
+    
+    <button class="btn-cart" onclick="trackAddToCart('Big Mac', 4.90, 'SKU_BMAC_01')">
+      Pridať Big Mac do košíka
+    </button>
+  </div>
+
+  <div id="exit-intent-modal" class="exit-modal-overlay">
+    <div class="exit-modal-box">
+      <button class="close-btn" onclick="closeExitModal()">×</button>
+      <div style="font-size: 3rem; margin-bottom: 10px;">🍔</div>
+      <h3>Tvoj burger chladne!</h3>
+      <p>Nenechaj ho čakať v košíku. Dokonči objednávku teraz.</p>
+      <button class="btn-modal-confirm" onclick="trackExitIntentClick()">
+        Dokončiť objednávku
+      </button>
+    </div>
+  </div>
+
+  <script>
+    // 0. INICIALIZÁCIA DATALAYERU (Musí byť na začiatku)
+    window.dataLayer = window.dataLayer || [];
+
+    /**
+     * 1. GA4 E-COMMERCE: Sledovanie pridania do košíka
+     */
+    function trackAddToCart(productName, price, itemId) {
+      // Vyčistenie predchádzajúcich e-commerce dát (GA4 štandard)
+      window.dataLayer.push({ ecommerce: null }); 
+      
+      // Push udalosti
+      window.dataLayer.push({
+        event: 'add_to_cart',
+        ecommerce: {
+          currency: 'EUR',
+          value: price,
+          items: [
+            {
+              item_id: itemId,
+              item_name: productName,
+              item_category: 'Burgre',
+              price: price,
+              quantity: 1
+            }
+          ]
+        }
+      });
+      console.log(`[GA4 DATA]: 'add_to_cart' úspešne odoslaný pre: ${productName} (${price} €)`);
+    }
+
+    /**
+     * 2. GA4 SCROLL DEPTH: Sledovanie hĺbky scrollovania stránky
+     */
+    (function() {
+      let scrollMarks = { '25': false, '50': false, '75': false, '100': false };
+      
+      window.addEventListener('scroll', () => {
+        let scrollPercent = Math.round((window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100);
+        
+        // Aktualizácia indikátora na obrazovke
+        document.querySelector('.scroll-indicator').innerText = `Scroll: ${scrollPercent}%`;
+
+        Object.keys(scrollMarks).forEach(mark => {
+          if (scrollPercent >= parseInt(mark) && !scrollMarks[mark]) {
+            scrollMarks[mark] = true; // Zabezpečí, že sa event odpáli iba raz
+            
+            window.dataLayer.push({
+              event: 'scroll_depth',
+              scroll_percentage: mark
+            });
+            
+            console.log(`[GA4 DATA]: Používateľ dosiahol hĺbku scrollovania: ${mark}%`);
+          }
+        });
+      });
+    })();
+
+    /**
+     * 3. EXIT INTENT POP-UP & GA4 TRACKING
+     */
+    let exitModalShown = false;
+
+    // Detekcia pohybu myši smerom von z okna (hore)
+    document.addEventListener('mouseleave', function(e) {
+      if (e.clientY < 20 && !exitModalShown) {
+        document.getElementById('exit-intent-modal').classList.add('show');
+        exitModalShown = true;
+        
+        // GA4 Event - Zobrazenie (Impression) pop-upu
+        window.dataLayer.push({
+          event: 'exit_intent_impression',
+          popup_name: 'Zachrana kosika - McDonald\'s'
+        });
+        
+        console.log('[GA4 DATA]: Exit intent popup zobrazený');
+      }
+    });
+
+    // Sledovanie kliknutia na akciu v pop-upe
+    function trackExitIntentClick() {
+      window.dataLayer.push({
+        event: 'exit_intent_click',
+        action: 'Dokončiť objednávku v popupe'
+      });
+      console.log('[GA4 DATA]: Používateľ klikol na konverzné tlačidlo v popupe');
+      closeExitModal();
+    }
+
+    function closeExitModal() {
+      document.getElementById('exit-intent-modal').classList.remove('show');
+    }
+  </script>
+
+</body>
+</html><meta name="description" content="Objednaj si ikonický Big Mac a chrumkavé hranolčeky online. Doručenie do 30 minút!">
+<meta property="og:title" content="McDonald's SK | Chuť, ktorá ťa dostane">
+<meta property="og:description" content="Klikni a objednaj si svoje obľúbené menu rýchlo a jednoducho.">
+<meta property="og:image" content="https://tvojweb.sk/assets/og-mcd-image.jpg">
+<meta property="og:type" content="website">
